@@ -11,6 +11,7 @@ class FileUploader {
         this.uploadId = options.uploadId || this.generateUploadId();
         this.currentChunk = 0;
         this.ajax = null;
+        this.headers = {};
     }
 
     generateUploadId() {
@@ -63,14 +64,18 @@ class FileUploader {
             this.ajax.abort();
         }
     }
+    setHeaders(headers) {
+        this.headers = headers;
+        return this;
+    }
 
 
     remove(name) {
         this.ajax = new XMLHttpRequest();
         this.ajax.open('DELETE', `${this.endpoint}/${encodeURIComponent(name)}`, true);
-        for (let key in headers) {
-            if (headers.hasOwnProperty(key)) {
-                this.ajax.setRequestHeader(key, headers[key]);
+        for (let key in  this.headers) {
+            if ( this.headers.hasOwnProperty(key)) {
+                this.ajax.setRequestHeader(key,  this.headers[key]);
             }
         }
         this.ajax.send();
@@ -80,9 +85,9 @@ class FileUploader {
         this.ajax = new XMLHttpRequest();
         this.ajax.open('GET', `${this.endpoint}/${encodeURIComponent(name)}`, true);
 
-        for (let key in headers) {
-            if (headers.hasOwnProperty(key)) {
-                this.ajax.setRequestHeader(key, headers[key]);
+        for (let key in  this.headers) {
+            if ( this.headers.hasOwnProperty(key)) {
+                this.ajax.setRequestHeader(key,  this.headers[key]);
             }
         }
         this.ajax.responseType = "blob";
@@ -121,9 +126,9 @@ class FileUploader {
         this.ajax = new XMLHttpRequest();
         this.ajax.open('POST', this.endpoint, true);
 
-        for (let key in headers) {
-            if (headers.hasOwnProperty(key)) {
-                this.ajax.setRequestHeader(key, headers[key]);
+        for (let key in  this.headers) {
+            if ( this.headers.hasOwnProperty(key)) {
+                this.ajax.setRequestHeader(key,  this.headers[key]);
             }
         }
 

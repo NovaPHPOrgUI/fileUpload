@@ -155,6 +155,7 @@ class FileUpload extends HTMLElement {
       credits: false,
       server: {
         process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+
           that._value = [];
 
           const uploader = new FileUploader(file, {
