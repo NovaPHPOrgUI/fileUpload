@@ -130,6 +130,7 @@ class FileUpload extends HTMLElement {
     } else {
       this._value = files.length > 0 ? files[0] : "";
     }
+    if (!this.pond) return
     this.pond.setOptions({
       files: this.config.files,
     });
