@@ -181,7 +181,7 @@
     cursor: auto;
 
     /* reset default button styles */
-    color: rgba(var(--mdui-color-on-background));
+    color: rgba(var(--mdui-color-on-primary));
 
     /* set default look n feel */
     border-radius: 50%;
@@ -354,7 +354,7 @@
 
     padding: 0.5625em 0.5625em;
 
-    color: rgba(var(--mdui-color-on-background));
+    color: rgba(var(--mdui-color-on-primary));
     border-radius: 0.5em;
 
     /* control positions */
@@ -670,7 +670,7 @@
 }
 /* states */
 .filepond--item-panel {
-    background-color: rgba(var(--mdui-color-on-surface), 0.85);
+    background-color: rgba(var(--mdui-color-secondary), 0.85);
 }
 [data-filepond-item-state='processing-complete'] .filepond--item-panel {
     background-color: rgba(var(--mdui-color-primary), 1);
