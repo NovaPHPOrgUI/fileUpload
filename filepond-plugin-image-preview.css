@@ -38,7 +38,7 @@
     max-height: inherit;
 }
 .filepond--image-preview-overlay-idle {
-    color: rgba(var(--mdui-color-secondary-container), 0.8);
+    color: rgba(var(--mdui-color-primary), 0.8);
 }
 .filepond--image-preview-overlay-success {
     mix-blend-mode: normal;
