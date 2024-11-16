@@ -24,6 +24,21 @@ class FileUpload extends HTMLElement {
   }
 
 
+  get value() {
+    if (typeof this._value === "string") {
+      return this._value;
+    }
+    return [...new Set(this._value)];
+  }
+
+    set value(val) {
+
+      $.waitProp(this, "pond", () => {
+        this.setFiles(val);
+      });
+
+    }
+
   // 验证方法
   validate() {
     let filepond = this.shadowRoot.querySelector(".filepond--drop-label");
@@ -45,17 +60,9 @@ class FileUpload extends HTMLElement {
     this._validity.valid = !this._validity.valueMissing ;
 
 
-    console.log(this._validity.valid, this._value.length === 0)
+    // console.log(this._validity.valid, this._value.length === 0)
 
   }
-
-  get value() {
-    return this._value;
-  }
-
-    set value(val) {
-      this.setFiles(val);
-    }
 
   connectedCallback() {
     this.config = {
@@ -252,6 +259,7 @@ class FileUpload extends HTMLElement {
     });
     that.setTranslate();
   }
+
   setTranslate() {
     let obj = {
       labelFileTypeNotAllowed: "该文件类型不允许上传",
@@ -273,7 +281,7 @@ class FileUpload extends HTMLElement {
       // 加载文件时使用的标签。
 
       labelFileLoadError: "加载时出错",
-      // 文件加载失败时使用的标签。
+      // 文件加载失败时���用的标签。
 
       labelFileProcessing: "上传中",
       // 上传文件时使用的标签。
@@ -312,7 +320,7 @@ class FileUpload extends HTMLElement {
       // 用于重试加载按钮的标签。
 
       labelButtonAbortItemProcessing: "取消",
-      // 用于中止上传按钮的标签。
+      // 用于中止上传按钮�����签。
 
       labelButtonUndoItemProcessing: "撤销",
       // 用于撤消上传按钮的标签。

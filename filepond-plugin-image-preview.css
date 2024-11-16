@@ -42,7 +42,7 @@
 }
 .filepond--image-preview-overlay-success {
     mix-blend-mode: normal;
-    color: rgba(var(--mdui-color-primary-container), 1);
+    color: rgba(var(--mdui-color-primary), 1);
 }
 .filepond--image-preview-overlay-failure {
     mix-blend-mode: normal;
