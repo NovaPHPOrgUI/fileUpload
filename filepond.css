@@ -632,7 +632,7 @@
 
     will-change: transform, opacity;
 
-    touch-action: none;
+    /* touch-action: none;*/
 
     /* item children order */
 }
