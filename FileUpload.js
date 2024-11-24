@@ -43,19 +43,20 @@ class FileUpload extends HTMLElement {
   validate() {
     let filepond = this.shadowRoot.querySelector(".filepond--drop-label");
     filepond.classList.remove("filepond--error");
-
-
-    if (this.pond.status !== 4 && this.pond.status !== 1 && this.getAttribute("required") !== null) {
-      this._validity.valueMissing = false;
-      return;
+    this._validity.valueMissing = false;
+    if (this.hasAttribute("required")) {
+      if (this.pond.status !== 4 && this.pond.status !== 1) {
+        this._validity.valueMissing = true;
+      }
+      if (this._value.length === 0) {
+        this._validity.valueMissing = true;
+      }
     }
 
-    // 检查是否为空
-    if (this.getAttribute("required") === null) {
-      this._validity.valueMissing = false;
-    } else {
-      this._validity.valueMissing = this._value.length === 0;
+    if (this.pond.status === 3) {
+      this._validity.valueMissing = true;
     }
+
     // 更新 valid 属性
     this._validity.valid = !this._validity.valueMissing ;
 
