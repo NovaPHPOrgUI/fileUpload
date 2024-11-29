@@ -249,6 +249,7 @@ class FileUpload extends HTMLElement {
             const match = name.match(/(\.[^.]+)$/);
             type = match ? match[1] : type;
           }
+            console.log()
 
           resolve(type);
         }),

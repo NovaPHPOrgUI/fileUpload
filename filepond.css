@@ -677,7 +677,8 @@
 }
 [data-filepond-item-state*='invalid'] .filepond--item-panel,
 [data-filepond-item-state*='error'] .filepond--item-panel {
-    background-color: rgba(var(--mdui-color-error-container));
+    background-color: rgba(var(--mdui-color-error));
+
 }
 /* style of item panel */
 .filepond--item-panel {
