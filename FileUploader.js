@@ -142,9 +142,12 @@ class FileUploader {
         this.ajax.onload = () => {
             if (this.ajax.status >= 200 && this.ajax.status < 300) {
                 const result = JSON.parse(this.ajax.responseText);
-                if (result.code === 200) {
+                if (result.code === 201 || result.code === 200) {
                     this.currentChunk++;
                     if (this.currentChunk < this.totalChunks) {
+                        if (result.data !== null) {
+                            uniqueID = result.data;
+                        }
                         this.uploadChunk(uniqueID);
                     } else {
                         this.onComplete(result);

@@ -179,7 +179,7 @@ class FileUpload extends HTMLElement {
               that.addFileValue(result.data);
             },
             onError: (error) => {
-              console.error('Upload failed', error);
+                console.error('Upload failed', error, arguments);
             }
           });
 
