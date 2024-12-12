@@ -237,6 +237,19 @@ class FileUpload extends HTMLElement {
           // Should call the load method when done, no parameters required
           load();
         },
+          remove: (source, load, error) => {
+              // Should somehow send `source` to server so server can remove the file with this source
+              const uploader = new FileUploader(null, {
+                  chunkSize: 2 * 1024 * 1024, // 2MB per chunk
+                  endpoint: that.config.uri,
+
+              });
+              that.removeFileValue(source)
+              uploader.remove(source);
+
+              // Should call the load method when done, no parameters required
+              load();
+          },
       },
       //文件类型
       acceptedFileTypes: this.config.accept,
@@ -249,7 +262,6 @@ class FileUpload extends HTMLElement {
             const match = name.match(/(\.[^.]+)$/);
             type = match ? match[1] : type;
           }
-            console.log()
 
           resolve(type);
         }),
