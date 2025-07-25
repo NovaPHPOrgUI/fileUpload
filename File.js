@@ -83,7 +83,7 @@ $.file = {
             onProgress: function (currentChunk, totalChunks) {
                 const progress = Math.round((currentChunk / totalChunks) * 100);
                 loading.setProgress(progress);
-                loading.setText("上传中:"+progress);
+                loading.setText("上传中（"+progress+"%）");
                 if (config.onProgress) {
                     config.onProgress(progress);
                 }
