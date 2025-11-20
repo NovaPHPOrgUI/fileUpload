@@ -25,6 +25,7 @@ class FileUploader {
      * @param {Function} [options.onComplete] - 上传完成回调函数
      * @param {Function} [options.onError] - 上传错误回调函数
      * @param {string} [options.uploadId] - 上传ID，如果不提供则自动生成
+     * @param {Object} [options.extraData] - 额外的 FormData 字段
      */
     constructor(file, options) {
         this.file = file;
@@ -39,6 +40,7 @@ class FileUploader {
         this.currentChunk = 0; // 当前分块索引
         this.ajax = null; // XMLHttpRequest对象
         this.headers = {}; // 请求头
+        this.extraData = options.extraData || {}; // 额外的 FormData 字段
     }
 
     /**
@@ -195,6 +197,13 @@ class FileUploader {
         formData.append('totalChunks', this.totalChunks);
         formData.append('fileName', this.file.name);
         formData.append("unique", uniqueID);
+        
+        // 添加额外的 FormData 字段
+        for (let key in this.extraData) {
+            if (this.extraData.hasOwnProperty(key)) {
+                formData.append(key, this.extraData[key]);
+            }
+        }
 
         // 创建XMLHttpRequest对象
         this.ajax = new XMLHttpRequest();

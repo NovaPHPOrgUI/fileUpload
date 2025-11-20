@@ -73,6 +73,45 @@ class FileUpload extends HTMLElement {
 
   }
 
+  /**
+   * 设置额外的 FormData 参数
+   * @param {string} key - 参数名
+   * @param {string|number} value - 参数值
+   */
+  setExtraParam(key, value) {
+    if (!this.config.extraParams) {
+      this.config.extraParams = {};
+    }
+    this.config.extraParams[key] = value;
+  }
+
+  /**
+   * 移除额外的 FormData 参数
+   * @param {string} key - 参数名
+   */
+  removeExtraParam(key) {
+    if (this.config.extraParams) {
+      delete this.config.extraParams[key];
+    }
+  }
+
+  /**
+   * 获取额外的 FormData 参数
+   * @param {string} key - 参数名
+   * @returns {string|number|undefined} 参数值
+   */
+  getExtraParam(key) {
+    return this.config.extraParams?.[key];
+  }
+
+  /**
+   * 动态获取额外的 FormData 数据
+   * 只返回通过 setExtraParam() 手动设置的参数
+   */
+  getExtraData() {
+    return this.config.extraParams ? { ...this.config.extraParams } : {};
+  }
+
   connectedCallback() {
     this.config = {
       uri: this.getAttribute("uri") || "/upload",
@@ -81,6 +120,7 @@ class FileUpload extends HTMLElement {
       files: [], // [{uri: "http://xxx.com/xxx.jpg", name: "xxx.jpg", size: 1024, type: "image/jpeg"}]
       maxFiles: this.getAttribute("limit") || 1,
       accept: (this.getAttribute("accept") || "image/*").split(","),
+      extraParams: {}, // 手动设置的额外参数
     };
     this.init();
   }
@@ -174,10 +214,11 @@ class FileUpload extends HTMLElement {
         process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
 
           that._value = [];
-
+          const extraData = that.getExtraData();
           const uploader = new FileUploader(file, {
             chunkSize: 2 * 1024 * 1024, // 2MB per chunk
             endpoint: that.config.uri,
+            extraData: extraData,
             onProgress: (current, total) => {
 
               progress(true, current, total);
@@ -185,6 +226,7 @@ class FileUpload extends HTMLElement {
             onComplete: (result) => {
               load(result.data);
               that.addFileValue(result.data);
+              $.emitter.emit("fileUpload",result.data);
             },
             onError: (error) => {
                 console.error('Upload failed', error, arguments);
