@@ -119,7 +119,15 @@ class FileUpload extends HTMLElement {
       name: this.getAttribute("name") || "file",
       files: [], // [{uri: "http://xxx.com/xxx.jpg", name: "xxx.jpg", size: 1024, type: "image/jpeg"}]
       maxFiles: this.getAttribute("limit") || 1,
-      accept: (this.getAttribute("accept") || "image/*").split(","),
+      // 支持换行/空格分隔的 accept，过滤空串
+      accept: (() => {
+        const raw = this.getAttribute("accept");
+        const list = (raw ? raw : "image/*")
+          .split(",")
+          .map(item => item.trim())
+          .filter(Boolean);
+        return list.length ? list : ["image/*"];
+      })(),
       extraParams: {}, // 手动设置的额外参数
     };
     this.init();
@@ -307,6 +315,7 @@ class FileUpload extends HTMLElement {
       // 用于上传按钮的标签。
       fileValidateTypeDetectType: (source, type) =>
         new Promise((resolve, reject) => {
+          $.logger.debug("select file "+ type,source)
           if (!type) {
             let name = source.name;
             const match = name.match(/(\.[^.]+)$/);
